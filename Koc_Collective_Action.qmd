@@ -1,0 +1,173 @@
+---
+title: "Homophily and Common Knowledge in a Threshold Model of Collective Action"
+author: "Alper Duman"
+format: beamer
+editor: visual
+---
+
+## Introduction
+
+-   We consider a model in which agents decide to commit to participate a collective action such as a revolt based on their inference on the behavior of other members of the society.
+
+-   An agent's commitment to the action requires the inferred quantity of agents that will be committing to the action to be above the threshold of the agent.
+
+-   The inference mechanism, and the decision to commit or not, is instantaneous for all members of the society, thus the model is not a typi- cal (dynamic) diffusion model widely covered in the literature.
+
+-   The key point of inference is the formation of the common knowledge between each given pair of agents regarding each other's action
+
+## Motivation
+
+-   Chwe (1998, 2000), interested in when I was at Umass, Amherst
+
+-   Started before Gezi
+
+-   But whatsapp idea emerged after Gezi
+
+-   Bottom-up coordination is the key
+
+-   Control of social media is central
+
+## Model example kite
+
+```{r, engine='tikz'}
+
+\begin{tikzpicture}[shorten >=1pt,->]
+  			\tikzstyle{vertex}=[circle,fill=black!20,minimum size=15pt,inner sep=0pt]
+			\foreach \name/\angle/\text in {T-1/120/1, T-2/-120/2,T-3/0/3 }\node[vertex,] (\name) at (\angle:1.2cm) {$\text$};
+			\node[vertex,] (T-4) at (0:3cm) {$4$};
+			\foreach \from/\to in {1/2,2/1,1/3,3/1,2/3,3/2,3/4,4/3}\draw (T-\from) -- (T-\to);		
+\end{tikzpicture}
+  			
+
+  
+
+
+```
+
+-   Thresholds of agents are identical and equal to 3
+
+-   Our inference mechanism suggests that society structured as a kite will have agents 1,2 and 3 will commit to the collective action while agent 4 will not.
+
+## Model example square
+
+```{r, engine='tikz'}
+
+\begin{tikzpicture}[shorten >=1pt,->]
+			\tikzstyle{vertex}=[circle,fill=black!20,minimum size=15pt,inner sep=0pt]
+			\foreach \name/\angle/\text in {T-1/45/1, T-2/-45/2,T-3/225/3, T-4/135/4 }\node[vertex] (\name) at (\angle:1.5cm) {$\text$};
+			\foreach \from/\to in {1/2,2/1, 2/3, 3/2, 4/3,3/4,1/4,4/1}\draw (T-\from) -- (T-\to);	
+\end{tikzpicture}	
+```
+
+-   The collective action will not emerge at all
+
+-   Although each agent still observes two others (like the members of the triangle in the previous society), they know that their neighbors are not directly linked, thus the common knowledge will not form
+
+-   Note that both societies have same number of communication links between agents.
+
+## Model
+
+-   There is a finite set of agents,
+
+    $N = \lbrace 1,2,..,n \rbrace$
+
+-   Each agent $i \in N$, chooses an action $a_{i} \in \lbrace r, s \rbrace$
+
+-   Each agent has a private threshold, $\Theta_{i} \in \lbrace 1,2, ..,n \rbrace$
+
+-   Given the threshold and the actions of every other agent, the utility is given as
+
+    $$
+    U_{i}= 
+    \begin{cases}
+        0 ,& \text{if } a_{i}=s \\
+        1 ,  & \text{if } a_{i}=r \wedge \lbrace j \in N : a_{j}=r \rbrace \geq \Theta_{i} \\
+        -z, & \text{if } a_{i}=r \wedge \lbrace j \in N : a_{j}=r \rbrace < \Theta_{i} 
+    \end{cases}
+    $$
+
+-   where $-z<0$ is the penalty if the agent revolts in case less than the threshold number of agents revolts.
+
+## Homophily
+
+-   We partition a society with 100 agents into two equal groups.
+
+-   The degree of each agent is set to 10 and the threshold of first group is fixed at 3. We check the effects of two parameters on the percentage of agents that commit to the collective action.
+
+-   We change the in-between probability (probability of having a link within one's own group relative to an agent outside the group) of agents from 70 percent to 95 percent with 1 percent intervals.
+
+-   In-between probability is a proxy for the degree of homophily.
+
+## Homophily Result
+
+-   We also change the threshold value of the second group from 3 to 7 with unit intervals.
+
+-   Above setting gave us 150 parameter combinations to test. For each parameter setting we generate 10 random homophily graphs and calculate the percentage of agents that commit to the collective action.
+
+-   We vary the degree of homophily as well as the threshold levels within and across the communities.
+
+-   We find that homophily enhances collective action. The degree of homophily has a non-linear effect in conjunction with varying threshold levels in one of the communities.
+
+## Non-linear Effect
+
+### ![](homophilyResult.png){width="546"}
+
+## WhatsApp model
+
+-   In the WhatsApp model, cliques of equal size have connections across each other. The main difference with random or small world network is that cliques of a given size is guaranteed to form up.
+
+-   Obviously if the threshold is less than the clique size then the collective action is also forthcoming.
+
+-   The distribution of thresholds matter in such a setting. Let assume that there are two groups with low (L) and high (H) thresholds.
+
+-   The degree of homophily is related to the likelihood that the L agents are linked to other L agents in their cliques.
+
+-   Given 100 agents and 10 cliques of size 10 we vary the degree of the homophily and the number of connections across cliques.
+
+## Whatsapp Model Network
+
+![](IslandNetwork.eps){width="2109" height="250"}
+
+## Result
+
+![](RevoltRateWAM.eps){width="3128" height="350"}
+
+## Mixing Thresholds
+
+-   In order to illustrate why homophily matters, we mix low and high threshold agents in each clique.
+
+-   Revolt rates decline dramatically, especially for low levels of probability of within clique connection.
+
+## ![](RevoltRateMix.eps){width="3104" height="350"}
+
+## Combined Model
+
+-   We further take two sets of agents with low and high thresholds. In this setting the maximum value of the low threshold agents is 10 and the maximum value of the high threshold agents is 20.
+
+-   We draw 10 threshold distributions of 50 from the low thresholds and 50 from the high thresholds. In each step average threshold in the network is incremented upwards.
+
+-   We also vary the degree of homophily from 0.1 to 1 with an increment of 0.1. We run 100 simulations and take the average revolt rate in the WAM
+
+## Overall Result
+
+![](RevoltWAM.png)
+
+## Discussion and Conclusion
+
+-   We agree that common knowledge is essential for the collective action to be successful.
+
+-   We embed the communication network through which the common knowledge can emerge in more plausible social settings.
+
+-   We emphasize the importance of homophily and the WhatsApp groups type configurations.
+
+-   Our simulation results suggest that indeed these are important in terms of general success rate of collective action.
+
+## Further Research and Robustness
+
+-   Real world data to test
+
+-   Heterogenous sizes of cliques (whatsapp groups)
+
+-   Better reasoning for threshold distributions, ie. surveys
+
+-   Making it dynamic
